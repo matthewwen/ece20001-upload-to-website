@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pytest = "*"
+firebase-admin = "*"
+"google.cloud" = "*"
 
 [dev-packages]
 
