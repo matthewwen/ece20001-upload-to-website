@@ -133,3 +133,4 @@ Pipfile.lock
 
 #Firebase
 firebase-key.json
+firebase-key-test.json

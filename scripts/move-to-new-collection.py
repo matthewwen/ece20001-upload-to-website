@@ -3,7 +3,13 @@ from firebase_admin import credentials
 from google.cloud import firestore
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../firebase-key.json"
+
+def set_env(env):
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../firebase-key.json" if env == "prod" else \
+        "../firebase-key-test.json"
+
+
+set_env("dev")
 db = firestore.Client()
 
 
@@ -18,10 +24,20 @@ def set_data_by_ref(name, items):
         ref.document(k).set(v)
 
 
-pages_data = get_data_by_ref("ece20001\pages")
-set_data_by_ref("ece20001_pages", pages_data)
-print(pages_data)
+# pages_data = get_data_by_ref("ece20001\pages")
+# set_data_by_ref("ece20001_pages", pages_data)
+# print(pages_data)
+#
+# practice_data = get_data_by_ref("ece20001\practice")
+# set_data_by_ref("ece20001_practice", practice_data)
+# print(practice_data)
 
-practice_data = get_data_by_ref("ece20001\practice")
-set_data_by_ref("ece20001_practice", practice_data)
-print(practice_data)
+fix_collection = [
+    ("ece20001\lessons", "ece20001_lessons",),
+    ("ece20001\pages", "ece20001_pages",),
+    ("ece20001\practice", "ece20001_practice",)
+]
+
+for k, v in fix_collection:
+    data = get_data_by_ref(k)
+    set_data_by_ref(v, data)
